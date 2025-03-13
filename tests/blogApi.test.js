@@ -60,6 +60,40 @@ test('a valid blog can be added ', async () => {
   assert(values.find(item => item.title === 'Test Blog 1'))
 })
 
+test('a blog can be deleted', async() => {
+  const blogsAtStart = await helper.blogsInDb()
+  const blogToDelete = blogsAtStart[0]
+
+  const response = await api
+    .delete(`/api/blogs/${blogToDelete.id}`)
+    .expect(204)
+
+  const blogsAtEnd = await helper.blogsInDb()
+
+  assert.strictEqual(blogsAtEnd.length, blogsAtStart.length - 1)
+  const values = Object.values(response.body)
+  assert(!values.find(item => item.title === `${blogToDelete.title}`))
+})
+
+test('a blog can be edited (likes)', async() => {
+  const blogsAtStart = await helper.blogsInDb()
+  const blogToEdit = blogsAtStart[0]
+  const newBlog = {
+    likes: 9001,
+  }
+
+  const response = await api
+    .put(`/api/blogs/${blogToEdit.id}`)
+    .send(newBlog)
+    .expect(200)
+
+  const blogsAtEnd = await helper.blogsInDb()
+
+  assert.strictEqual(blogsAtEnd.length, blogsAtStart.length)
+  assert(response.body.title === blogToEdit.title)
+  assert(response.body.likes === 9001)
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
