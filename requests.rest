@@ -3,10 +3,34 @@ GET http://localhost:3003/api/blogs/
 ###
 POST  http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjQ0NDQ0NDQ0NCIsImlkIjoiNjdkNDU3MDVlNmFmNDBlYTMyYTU5NmFjIiwiaWF0IjoxNzQyMDUxNTI5fQ.u84sgvCqMSVptRyJv61wxye-DPiy1kJ8GCiZo2Zhy3M
 
 {
-  "title": "Title1",
+  "title": "Ti22312tle1",
   "author": "Author1",
   "url": "Url1",
-   "likes": 1
+  "likes": 1,
+  "user": "67d455dbc78d9d1a080631e5"
+}
+
+###
+GET http://localhost:3003/api/users/
+
+###
+POST http://localhost:3003/api/users/
+Content-Type: application/json
+
+{
+  "username": "444444444",
+  "name": "Superuser",
+  "password": "salainen"
+}
+
+###
+POST http://localhost:3003/api/login/
+Content-Type: application/json
+
+{
+  "username": "444444444",
+  "password": "salainen"
 }
